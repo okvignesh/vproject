@@ -5,11 +5,11 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
-const SignupScreen = () => {
-  const [username, setUsername] = useState('');
+const SignupScreen = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,6 +20,9 @@ const SignupScreen = () => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
+        setEmail('');
+        setPassword('');
+        Alert.alert('Signup got success');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -32,6 +35,10 @@ const SignupScreen = () => {
 
         console.error(error);
       });
+  };
+
+  const handleLogin = () => {
+    props.navigation.navigate('LoginScreen');
   };
 
   return (
@@ -57,6 +64,10 @@ const SignupScreen = () => {
 
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Go to Login</Text>
       </TouchableOpacity>
     </View>
   );
