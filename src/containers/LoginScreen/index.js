@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {LoginButton, AccessToken} from 'react-native-fbsdk-next';
 
 const LoginScreen = props => {
   const [email, setEmail] = useState('');
@@ -63,6 +64,21 @@ const LoginScreen = props => {
           Don't have an account? Sign up here
         </Text>
       </TouchableOpacity>
+
+      <LoginButton
+        onLoginFinished={(error, result) => {
+          if (error) {
+            console.log('login has error: ' + result.error);
+          } else if (result.isCancelled) {
+            console.log('login is cancelled.');
+          } else {
+            AccessToken.getCurrentAccessToken().then(data => {
+              console.log(data.accessToken.toString());
+            });
+          }
+        }}
+        onLogoutFinished={() => console.log('logout.')}
+      />
     </View>
   );
 };
