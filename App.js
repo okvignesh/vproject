@@ -1,15 +1,7 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
-function App(): JSX.Element {
+function App() {
   return (
     <SafeAreaView style={styles.centerStyle}>
       <View>
