@@ -1,13 +1,17 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import Navigator from './src/navigator';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {LoginScreen, SignupScreen} from './src/containers';
+
+const Stack = createNativeStackNavigator();
 
 function App() {
   return (
-    <SafeAreaView style={styles.centerStyle}>
-      <View>
-        <Text>Welcome to V-Project</Text>
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   );
 }
 
