@@ -18,8 +18,9 @@ const LoginScreen = props => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User Logged in successfully!');
-        // setEmail('');
-        // setPassword('');
+        setEmail('');
+        setPassword('');
+        props.navigation.navigate('ProfileScreen');
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
