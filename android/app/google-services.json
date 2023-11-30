@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "164407272497",
+    "project_id": "batch4-36ace",
+    "storage_bucket": "batch4-36ace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164407272497:android:67c968e126480d17e86110",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4B5tBsgtymQtoAaizCjs7n23eyA32KY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164407272497:android:a1e6c3bb7a71c27ce86110",
+        "android_client_info": {
+          "package_name": "com.itc.batch4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4B5tBsgtymQtoAaizCjs7n23eyA32KY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164407272497:android:cf5cfbf7694a2100e86110",
+        "android_client_info": {
+          "package_name": "com.myfirstapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4B5tBsgtymQtoAaizCjs7n23eyA32KY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164407272497:android:9b3cc02ad646dd69e86110",
+        "android_client_info": {
+          "package_name": "com.rnfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4B5tBsgtymQtoAaizCjs7n23eyA32KY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164407272497:android:78960233bf564d39e86110",
+        "android_client_info": {
+          "package_name": "com.vproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4B5tBsgtymQtoAaizCjs7n23eyA32KY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
