@@ -1,12 +1,15 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import React from 'react';
 import auth from '@react-native-firebase/auth';
+import {LoginButton, AccessToken, LoginManager} from 'react-native-fbsdk-next';
 
 const ProfileScreen = props => {
   const handleLogout = () => {
     auth()
       .signOut()
       .then(() => console.log('User signed out successfully!'));
+
+    // LoginManager.logOut();
     props.navigation.navigate('LoginScreen');
   };
 
