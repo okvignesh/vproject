@@ -22,8 +22,15 @@ const StackNav = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="SignupScreen" component={SignupScreen} />
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="MyPlaces" component={MyPlaces} />
+      <Stack.Screen name="AllPlaces" component={AllPlaces} />
+      <Stack.Screen name="AddPlace" component={AddPlace} />
     </Stack.Navigator>
   );
 };
