@@ -1,9 +1,13 @@
 import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import React from 'react';
 import auth from '@react-native-firebase/auth';
-import {LoginButton, AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import {useRoute} from '@react-navigation/native';
 
 const ProfileScreen = props => {
+  const route = useRoute();
+  const username = route.params;
+  console.log(username);
+
   const handleLogout = () => {
     auth()
       .signOut()
@@ -16,6 +20,7 @@ const ProfileScreen = props => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>ProfileScreen</Text>
+      <Text style={styles.title}>{`Welcome to the Dashboard ${username}`}</Text>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>

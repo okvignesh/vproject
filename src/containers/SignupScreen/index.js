@@ -12,29 +12,38 @@ import auth from '@react-native-firebase/auth';
 const SignupScreen = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
-  const handleSignup = () => {
-    // Implement your signup logic here
-    console.log('Signup pressed');
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        setEmail('');
-        setPassword('');
-        Alert.alert('Signup got success');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
+  const handleSignup = async () => {
+    try {
+      console.log('Signup pressed');
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      console.log('User Account Created!');
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
+      await userCredential.user.updateProfile({
+        displayName: username,
       });
+
+      setEmail('');
+      setPassword('');
+      setUsername('');
+
+      Alert.alert('Signup Successful, Login Now');
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        console.log('That email address is already in use!');
+        Alert.alert('Email address is already in use.');
+      } else if (error.code === 'auth/invalid-email') {
+        console.log('That email address is invalid!');
+        Alert.alert('Invalid email address.');
+      } else {
+        console.log('Unexpected error during signup: ', error);
+        Alert.alert('An unexpected error occurred during signup.');
+      }
+    }
   };
 
   const handleLogin = () => {
@@ -48,15 +57,23 @@ const SignupScreen = props => {
       <TextInput
         autoCapitalize="none"
         style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
+        placeholder="Enter your Name"
+        onChangeText={text => setUsername(text)}
+        value={username}
+      />
+
+      <TextInput
+        autoCapitalize="none"
+        style={styles.input}
+        placeholder="Enter your Email"
         onChangeText={text => setEmail(text)}
         value={email}
       />
 
       <TextInput
+        autoCapitalize="none"
         style={styles.input}
-        placeholder="Password"
+        placeholder="Enter your Password"
         secureTextEntry
         onChangeText={text => setPassword(text)}
         value={password}

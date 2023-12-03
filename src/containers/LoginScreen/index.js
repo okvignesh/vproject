@@ -16,11 +16,15 @@ const LoginScreen = props => {
     console.log('Login pressed');
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User Logged in successfully!');
+      .then(response => {
+        console.log(
+          'User Logged in successfully!',
+          response?.user?.displayName,
+        );
+        console.log(response);
         setEmail('');
         setPassword('');
-        props.navigation.navigate('ProfileScreen');
+        props.navigation.navigate('ProfileScreen', response?.user?.displayName);
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
@@ -41,7 +45,7 @@ const LoginScreen = props => {
       <TextInput
         autoCapitalize="none"
         style={styles.input}
-        placeholder="Enter your email"
+        placeholder="Enter your Email"
         onChangeText={text => setEmail(text)}
         value={email}
       />
