@@ -1,12 +1,13 @@
 import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
 
 const ProfileScreen = props => {
   const route = useRoute();
-  const username = route.params;
-  console.log(username);
+  // const username = route.params;
+  // console.log(username);
+  const [username, setUsername] = useState(route.params);
 
   const handleLogout = () => {
     auth()
