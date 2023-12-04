@@ -21,7 +21,7 @@ const LoginScreen = props => {
           'User Logged in successfully!',
           response?.user?.displayName,
         );
-        console.log(response);
+        // console.log(response);
         setEmail('');
         setPassword('');
         props.navigation.navigate('ProfileScreen', response?.user?.displayName);
