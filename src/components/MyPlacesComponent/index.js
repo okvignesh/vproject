@@ -7,32 +7,27 @@ const MyPlaces = () => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const currentUser = auth().currentUser;
-        console.log('Current User ', currentUser);
+    const currentUser = auth().currentUser;
 
-        if (currentUser) {
-          const userUid = currentUser.uid;
+    if (!currentUser) {
+      return;
+    }
 
-          const querySnapshot = await firestore()
-            .collection('UserMyPlaces')
-            .where('userId', '==', userUid)
-            .get();
+    const userUid = currentUser.uid;
 
-          const data = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
+    const unsubscribe = firestore()
+      .collection('UserMyPlaces')
+      .where('userId', '==', userUid)
+      .onSnapshot(querySnapshot => {
+        const data = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-          setPlaces(data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+        setPlaces(data);
+      });
 
-    fetchData();
+    return () => unsubscribe();
   }, []);
 
   const renderPlaceItem = ({item}) => (
@@ -55,13 +50,6 @@ const MyPlaces = () => {
         keyExtractor={item => item.id}
         renderItem={renderPlaceItem}
       />
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate('ProfileScreen');
-        }}>
-        <Text style={styles.buttonText}>Go to Dashboard</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };
