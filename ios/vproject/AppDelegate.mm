@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <AuthenticationServices/AuthenticationServices.h>
@@ -13,6 +14,7 @@
   [[FBSDKApplicationDelegate sharedInstance] application:application
                          didFinishLaunchingWithOptions:launchOptions];
   [FIRApp configure];
+  [GMSServices provideAPIKey:@"AIzaSyB4uOPrlEUJjx-tCcPm7BY5fn1gLwtB4BA"];
   self.moduleName = @"vproject";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.

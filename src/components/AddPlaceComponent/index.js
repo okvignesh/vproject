@@ -7,7 +7,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -48,6 +48,7 @@ const AddPlace = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Add Place Component</Text>
       <MapView
+        provider={PROVIDER_GOOGLE}
         style={styles.map}
         region={region}
         onRegionChangeComplete={handleRegionChangeComplete}>
