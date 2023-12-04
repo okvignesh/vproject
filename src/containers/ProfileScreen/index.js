@@ -3,36 +3,40 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
 
-const ProfileScreen = props => {
+const ProfileScreen = () => {
   const route = useRoute();
   // const username = route.params;
   // console.log(username);
-  const [username, setUsername] = useState(route.params);
+  // const [username, setUsername] = useState(route.params);
+  const currentUser = auth().currentUser;
 
   const handleLogout = () => {
     auth()
       .signOut()
       .then(() => console.log('User signed out successfully!'));
-    props.navigation.navigate('LoginScreen');
+    // props.navigation.navigate('LoginScreen');
   };
 
-  const handleMyPlaces = () => {
-    props.navigation.navigate('MyPlaces');
-  };
+  // const handleMyPlaces = () => {
+  //   props.navigation.navigate('MyPlaces');
+  // };
 
-  const handleAllPlaces = () => {
-    props.navigation.navigate('AllPlaces');
-  };
+  // const handleAllPlaces = () => {
+  //   props.navigation.navigate('AllPlaces');
+  // };
 
-  const handleAddPlace = () => {
-    props.navigation.navigate('AddPlace');
-  };
+  // const handleAddPlace = () => {
+  //   props.navigation.navigate('AddPlace');
+  // };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dashboard Screen</Text>
-      <Text style={styles.title}>{`Welcome to the Dashboard ${username}`}</Text>
-      <TouchableOpacity style={styles.button} onPress={handleMyPlaces}>
+      <Text
+        style={
+          styles.title
+        }>{`Welcome to the Dashboard ${currentUser.displayName}`}</Text>
+      {/* <TouchableOpacity style={styles.button} onPress={handleMyPlaces}>
         <Text style={styles.buttonText}>My Places</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleAllPlaces}>
@@ -40,7 +44,7 @@ const ProfileScreen = props => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleAddPlace}>
         <Text style={styles.buttonText}>Add Place</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>

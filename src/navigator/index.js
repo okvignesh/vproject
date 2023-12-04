@@ -1,5 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {
@@ -9,12 +8,36 @@ import {
   WelcomeScreen,
 } from '../containers';
 import {MyPlaces, AllPlaces, AddPlace} from '../components';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const StackNav = () => {
-  return (
+const Navigator = () => {
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+  }
+
+  const isLoggedIn = !!user;
+
+  return isLoggedIn ? (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: true,
+      }}>
+      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Drawer.Screen name="MyPlaces" component={MyPlaces} />
+      <Drawer.Screen name="AllPlaces" component={AllPlaces} />
+      <Drawer.Screen name="AddPlace" component={AddPlace} />
+    </Drawer.Navigator>
+  ) : (
     <Stack.Navigator>
       <Stack.Screen
         name="LoginScreen"
@@ -22,31 +45,9 @@ const StackNav = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="SignupScreen" component={SignupScreen} />
-      <Stack.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
-        options={{headerShown: false}}
-      />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-      <Stack.Screen name="MyPlaces" component={MyPlaces} />
-      <Stack.Screen name="AllPlaces" component={AllPlaces} />
-      <Stack.Screen name="AddPlace" component={AddPlace} />
     </Stack.Navigator>
   );
 };
 
-const DrawerNav = () => {
-  return (
-    <Drawer.Navigator screenOptions={{headerShown: false}}>
-      <Drawer.Screen name="Home" component={StackNav} />
-    </Drawer.Navigator>
-  );
-};
-
-const Navigator = () => {
-  return <DrawerNav />;
-};
-
 export default Navigator;
-
-const styles = StyleSheet.create({});

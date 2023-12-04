@@ -24,7 +24,7 @@ const LoginScreen = props => {
         // console.log(response);
         setEmail('');
         setPassword('');
-        props.navigation.navigate('ProfileScreen', response?.user?.displayName);
+        // props.navigation.navigate('ProfileScreen', response?.user?.displayName);
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {

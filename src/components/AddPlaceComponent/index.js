@@ -11,7 +11,7 @@ import MapView, {Marker} from 'react-native-maps';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const AddPlace = props => {
+const AddPlace = () => {
   const [region, setRegion] = useState({
     latitude: 51.4657689,
     longitude: -2.5722472,
@@ -64,13 +64,13 @@ const AddPlace = props => {
       <TouchableOpacity style={styles.button} onPress={handleAddPlace}>
         <Text style={styles.buttonText}>Add Place</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           props.navigation.navigate('ProfileScreen');
         }}>
         <Text style={styles.buttonText}>Go to Dashboard</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

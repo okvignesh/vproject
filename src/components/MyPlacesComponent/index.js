@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const MyPlaces = ({navigation}) => {
+const MyPlaces = () => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
@@ -49,19 +49,19 @@ const MyPlaces = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>All Places Component</Text>
+      <Text style={styles.title}>My Places Component</Text>
       <FlatList
         data={places}
         keyExtractor={item => item.id}
         renderItem={renderPlaceItem}
       />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           navigation.navigate('ProfileScreen');
         }}>
         <Text style={styles.buttonText}>Go to Dashboard</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
