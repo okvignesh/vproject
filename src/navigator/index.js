@@ -43,33 +43,41 @@ const Navigator = () => {
     }
   };
 
-  return isLoggedIn ? (
-    <Drawer.Navigator
-      screenOptions={{
-        headerShown: true,
-      }}
-      drawerContent={props => (
-        <DrawerContentScrollView {...props}>
-          <DrawerItemList {...props} />
-          <DrawerItem label="Logout" onPress={handleLogout} />
-        </DrawerContentScrollView>
-      )}>
-      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
-      <Drawer.Screen name="MyPlaces" component={MyPlaces} />
-      <Drawer.Screen name="AllPlaces" component={AllPlaces} />
-      <Drawer.Screen name="AddPlace" component={AddPlace} />
-    </Drawer.Navigator>
-  ) : (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen name="SignupScreen" component={SignupScreen} />
-      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-    </Stack.Navigator>
-  );
+  const DrawerNav = () => {
+    return (
+      <Drawer.Navigator
+        screenOptions={{
+          headerShown: true,
+        }}
+        drawerContent={props => (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label="Logout" onPress={handleLogout} />
+          </DrawerContentScrollView>
+        )}>
+        <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Drawer.Screen name="MyPlaces" component={MyPlaces} />
+        <Drawer.Screen name="AllPlaces" component={AllPlaces} />
+        <Drawer.Screen name="AddPlace" component={AddPlace} />
+      </Drawer.Navigator>
+    );
+  };
+
+  const authNav = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      </Stack.Navigator>
+    );
+  };
+
+  return isLoggedIn ? DrawerNav() : authNav();
 };
 
 export default Navigator;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,38 +7,54 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
 
-const SignupScreen = props => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+const schema = yup.object().shape({
+  username: yup.string().required('Name is required'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email')
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email'),
+  password: yup.string().required('Password is required'),
+});
 
-  const handleSignup = async () => {
+const SignupScreen = ({navigation}) => {
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleSignup = async data => {
     try {
       console.log('Signup pressed');
       const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        password,
+        data.email,
+        data.password,
       );
       console.log('User Account Created!');
 
       await userCredential.user.updateProfile({
-        displayName: username,
+        displayName: data.username,
       });
 
-      setEmail('');
-      setPassword('');
-      setUsername('');
-
       Alert.alert('Signup Successful, Login Now');
+      navigation.navigate('LoginScreen');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        console.log('That email address is already in use!');
-        Alert.alert('Email address is already in use.');
+        setError('email', {
+          type: 'manual',
+          message: 'Email address is already in use.',
+        });
       } else if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-        Alert.alert('Invalid email address.');
+        setError('email', {type: 'manual', message: 'Invalid email address.'});
       } else {
         console.log('Unexpected error during signup: ', error);
         Alert.alert('An unexpected error occurred during signup.');
@@ -47,39 +63,71 @@ const SignupScreen = props => {
   };
 
   const handleLogin = () => {
-    props.navigation.navigate('LoginScreen');
+    navigation.navigate('LoginScreen');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
-      <TextInput
-        autoCapitalize="none"
-        style={styles.input}
-        placeholder="Enter your Name"
-        onChangeText={text => setUsername(text)}
-        value={username}
+      <Controller
+        control={control}
+        render={({field}) => (
+          <TextInput
+            autoCapitalize="none"
+            style={styles.input}
+            placeholder="Enter your Name"
+            onChangeText={text => field.onChange(text)}
+            value={field.value}
+          />
+        )}
+        name="username"
+        defaultValue=""
       />
+      {errors.username && (
+        <Text style={styles.errorText}>{errors.username.message}</Text>
+      )}
 
-      <TextInput
-        autoCapitalize="none"
-        style={styles.input}
-        placeholder="Enter your Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
+      <Controller
+        control={control}
+        render={({field}) => (
+          <TextInput
+            autoCapitalize="none"
+            style={styles.input}
+            placeholder="Enter your Email"
+            onChangeText={text => field.onChange(text)}
+            value={field.value}
+          />
+        )}
+        name="email"
+        defaultValue=""
       />
+      {errors.email && (
+        <Text style={styles.errorText}>{errors.email.message}</Text>
+      )}
 
-      <TextInput
-        autoCapitalize="none"
-        style={styles.input}
-        placeholder="Enter your Password"
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
+      <Controller
+        control={control}
+        render={({field}) => (
+          <TextInput
+            autoCapitalize="none"
+            style={styles.input}
+            placeholder="Enter your Password"
+            secureTextEntry
+            onChangeText={text => field.onChange(text)}
+            value={field.value}
+          />
+        )}
+        name="password"
+        defaultValue=""
       />
+      {errors.password && (
+        <Text style={styles.errorText}>{errors.password.message}</Text>
+      )}
 
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleSubmit(handleSignup)}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -121,6 +169,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
   },
 });
 

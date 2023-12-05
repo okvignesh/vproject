@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,59 +6,93 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
 
-const LoginScreen = props => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email')
+    .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email'),
+  password: yup.string().required('Password is required'),
+});
 
-  const handleLogin = () => {
-    console.log('Login pressed');
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        console.log(
-          'User Logged in successfully!',
-          response?.user?.displayName,
-        );
-        // console.log(response);
-        setEmail('');
-        setPassword('');
-        // props.navigation.navigate('ProfileScreen', response?.user?.displayName);
-      })
-      .catch(error => {
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-        console.error(error);
-      });
+const LoginScreen = ({navigation}) => {
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleLogin = async data => {
+    try {
+      const response = await auth().signInWithEmailAndPassword(
+        data.email,
+        data.password,
+      );
+      console.log('User Logged in successfully!', response?.user?.displayName);
+      // navigation.navigate('ProfileScreen', response?.user?.displayName);
+    } catch (error) {
+      if (error.code === 'auth/invalid-email') {
+        setError('email', {type: 'manual', message: 'Invalid email address'});
+      }
+      console.error(error);
+    }
   };
 
   const navigateToSignup = () => {
-    props.navigation.navigate('SignupScreen');
+    navigation.navigate('SignupScreen');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
-      <TextInput
-        autoCapitalize="none"
-        style={styles.input}
-        placeholder="Enter your Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
+      <Controller
+        control={control}
+        render={({field}) => (
+          <TextInput
+            autoCapitalize="none"
+            style={styles.input}
+            placeholder="Enter your Email"
+            onChangeText={text => field.onChange(text)}
+            value={field.value}
+          />
+        )}
+        name="email"
+        defaultValue=""
       />
+      {errors.email && (
+        <Text style={styles.errorText}>{errors.email.message}</Text>
+      )}
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your Password"
-        secureTextEntry
-        onChangeText={text => setPassword(text)}
-        value={password}
+      <Controller
+        control={control}
+        render={({field}) => (
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your Password"
+            secureTextEntry
+            onChangeText={text => field.onChange(text)}
+            value={field.value}
+          />
+        )}
+        name="password"
+        defaultValue=""
       />
+      {errors.password && (
+        <Text style={styles.errorText}>{errors.password.message}</Text>
+      )}
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleSubmit(handleLogin)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
@@ -105,6 +139,10 @@ const styles = StyleSheet.create({
   },
   signupText: {
     color: '#3498db',
+    fontSize: 14,
+  },
+  errorText: {
+    color: 'red',
     fontSize: 14,
   },
 });

@@ -32,10 +32,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dashboard Screen</Text>
-      <Text
-        style={
-          styles.title
-        }>{`Welcome to the Dashboard ${currentUser.displayName}`}</Text>
+      <Text style={styles.title}>{`Welcome ${currentUser.displayName} !`}</Text>
       {/* <TouchableOpacity style={styles.button} onPress={handleMyPlaces}>
         <Text style={styles.buttonText}>My Places</Text>
       </TouchableOpacity>
