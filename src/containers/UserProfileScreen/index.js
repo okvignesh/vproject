@@ -154,7 +154,6 @@ const UserProfileScreen = () => {
   }, [gender]);
 
   const onColorChange = color => {
-    console.log('Am I calling??');
     setUserColor(color);
   };
 

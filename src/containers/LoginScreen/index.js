@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  FlatList,
+  Modal,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
+import i18next, {languageResources} from '../../../services/i18next';
+import languageList from '../../../services/languageList.json';
+import {useTranslation} from 'react-i18next';
 
 const schema = yup.object().shape({
   email: yup
@@ -21,6 +26,7 @@ const schema = yup.object().shape({
 });
 
 const LoginScreen = ({navigation}) => {
+  const {t} = useTranslation();
   const {
     control,
     handleSubmit,
@@ -50,9 +56,40 @@ const LoginScreen = ({navigation}) => {
     navigation.navigate('SignupScreen');
   };
 
+  const [visible, setVisible] = useState(false);
+
+  const changeLng = lng => {
+    i18next.changeLanguage(lng);
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Modal visible={visible} onRequestClose={() => setVisible(false)}>
+        <View style={styles.languagesList}>
+          <FlatList
+            data={Object.keys(languageResources)}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                style={styles.languageButton}
+                onPress={() => changeLng(item)}>
+                <Text style={styles.langName}>
+                  {languageList[item].nativeName}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </Modal>
+      <Text style={styles.title}>{t('welcome')}</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setVisible(true);
+        }}>
+        <Text style={styles.buttonText}>{t('change-language')}</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>{t('login')}</Text>
 
       <Controller
         control={control}
@@ -60,7 +97,7 @@ const LoginScreen = ({navigation}) => {
           <TextInput
             autoCapitalize="none"
             style={styles.input}
-            placeholder="Enter your Email"
+            placeholder={t('enteremail')}
             onChangeText={text => field.onChange(text)}
             value={field.value}
           />
@@ -77,7 +114,7 @@ const LoginScreen = ({navigation}) => {
         render={({field}) => (
           <TextInput
             style={styles.input}
-            placeholder="Enter your Password"
+            placeholder={t('enterpwd')}
             secureTextEntry
             onChangeText={text => field.onChange(text)}
             value={field.value}
@@ -93,13 +130,11 @@ const LoginScreen = ({navigation}) => {
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit(handleLogin)}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>{t('login')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={navigateToSignup}>
-        <Text style={styles.signupText}>
-          Don't have an account? Sign up here
-        </Text>
+        <Text style={styles.signupText}>{t('noaccount')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -144,6 +179,21 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 14,
+  },
+  languagesList: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: '#6258e8',
+  },
+  languageButton: {
+    padding: 10,
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: 1,
+  },
+  langName: {
+    fontSize: 16,
+    color: 'white',
   },
 });
 
