@@ -6,6 +6,8 @@ import {
   SignupScreen,
   ProfileScreen,
   WelcomeScreen,
+  UserProfileScreen,
+  AllUsersScreen,
 } from '../containers';
 import {MyPlaces, AllPlaces, AddPlace} from '../components';
 import auth from '@react-native-firebase/auth';
@@ -56,6 +58,8 @@ const Navigator = () => {
           </DrawerContentScrollView>
         )}>
         <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Drawer.Screen name="UserProfileScreen" component={UserProfileScreen} />
+        <Drawer.Screen name="AllUsersScreen" component={AllUsersScreen} />
         <Drawer.Screen name="MyPlaces" component={MyPlaces} />
         <Drawer.Screen name="AllPlaces" component={AllPlaces} />
         <Drawer.Screen name="AddPlace" component={AddPlace} />
