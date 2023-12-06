@@ -14,13 +14,13 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const UserProfileScreen = () => {
-  const [firstName, setFirstName] = useState('Vignesh');
-  const [lastName, setLastName] = useState('Kumaran');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('male');
   const [userColor, setUserColor] = useState('#000000');
-  const [userLocation, setUserLocation] = useState('Bristol');
-  const [author, setAuthor] = useState('Vignesh');
+  const [userLocation, setUserLocation] = useState('');
+  const [author, setAuthor] = useState('');
 
   const currentUser = auth().currentUser;
   const uid = currentUser.uid;
@@ -158,6 +158,16 @@ const UserProfileScreen = () => {
       </View>
 
       <View style={styles.inputContainer}>
+        <Text style={styles.label}>Color</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Color"
+          value={userColor}
+          onChangeText={text => setUserColor(text)}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
         <Text style={styles.label}>Author</Text>
         <TextInput
           style={styles.input}
@@ -230,6 +240,10 @@ const styles = StyleSheet.create({
   },
   iosButton: {
     paddingVertical: 8,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
   },
 });
 
