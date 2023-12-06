@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -28,6 +28,32 @@ const UserProfileScreen = () => {
 
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  useEffect(() => {
+    // Fetch user profile data when the component mounts
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const userProfileRef = firestore().collection('UserProfile');
+      const userSnapshot = await userProfileRef.where('uid', '==', uid).get();
+
+      if (!userSnapshot.empty) {
+        // User profile exists, update state with existing data
+        const userData = userSnapshot.docs[0].data();
+        setFirstName(userData.firstName || '');
+        setLastName(userData.lastName || '');
+        setDob(userData.dob || '');
+        setGender(userData.gender || 'male');
+        setUserColor(userData.userColor || '#000000');
+        setUserLocation(userData.userLocation || '');
+        setAuthor(userData.author || '');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
 
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
@@ -66,6 +92,9 @@ const UserProfileScreen = () => {
 
   const handleAddUser = async () => {
     try {
+      const userProfileRef = firestore().collection('UserProfile');
+      const userSnapshot = await userProfileRef.where('uid', '==', uid).get();
+
       const userObject = {
         uid,
         firstName,
@@ -77,11 +106,17 @@ const UserProfileScreen = () => {
         author,
       };
 
-      await firestore().collection('UserProfile').add(userObject);
+      if (userSnapshot.empty) {
+        // No existing document, add a new one
+        await userProfileRef.add(userObject);
+      } else {
+        // Update the existing document
+        await userProfileRef.doc(userSnapshot.docs[0].id).update(userObject);
+      }
 
       Alert.alert('User Profile Saved Successfully!');
     } catch (error) {
-      console.error('Error adding user:', error);
+      console.error('Error adding/updating user profile:', error);
     }
   };
 

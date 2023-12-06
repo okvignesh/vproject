@@ -6,7 +6,7 @@ const AllUsersScreen = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchInitialData = async () => {
       try {
         const userCollection = await firestore()
           .collection('UserProfile')
@@ -21,7 +21,19 @@ const AllUsersScreen = () => {
       }
     };
 
-    fetchData();
+    const unsubscribe = firestore()
+      .collection('UserProfile')
+      .onSnapshot(snapshot => {
+        const updatedUsers = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setUsers(updatedUsers);
+      });
+
+    fetchInitialData();
+
+    return () => unsubscribe();
   }, []);
 
   const renderUserItem = ({item}) => (
@@ -30,11 +42,11 @@ const AllUsersScreen = () => {
         style={
           styles.userName
         }>{`Name: ${item.firstName} ${item.lastName}`}</Text>
-      <Text style={styles.userDob}>{`DOB: ${item.dob}`}</Text>
-      <Text style={styles.userGender}>{`Gender: ${item.gender}`}</Text>
-      <Text style={styles.userGender}>{`Color: ${item.userColor}`}</Text>
-      <Text style={styles.userGender}>{`Location: ${item.userLocation}`}</Text>
-      <Text style={styles.userGender}>{`Author: ${item.author}`}</Text>
+      <Text style={styles.userStyle}>{`DOB: ${item.dob}`}</Text>
+      <Text style={styles.userStyle}>{`Gender: ${item.gender}`}</Text>
+      <Text style={styles.userStyle}>{`Color: ${item.userColor}`}</Text>
+      <Text style={styles.userStyle}>{`Location: ${item.userLocation}`}</Text>
+      <Text style={styles.userStyle}>{`Author: ${item.author}`}</Text>
     </View>
   );
 
@@ -72,11 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  userDob: {
-    fontSize: 14,
-    color: '#555',
-  },
-  userGender: {
+  userStyle: {
     fontSize: 14,
     color: '#555',
   },
