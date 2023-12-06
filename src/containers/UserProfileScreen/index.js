@@ -13,8 +13,24 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const UserProfileScreen = () => {
+  //   const validationSchema = yup.object().shape({
+  //     firstName: yup.string().required('First Name is required'),
+  // lastName: yup.string().required('Last Name is required'),
+  // userLocation: yup.string().required('User Location is required'),
+  // author: yup.string().required('Author is required'),
+  //   });
+  //   const {
+  //     control,
+  //     handleSubmit,
+  //     formState: {errors},
+  //   } = useForm({
+  //     resolver: yupResolver(validationSchema),
+  //   });
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
@@ -120,11 +136,46 @@ const UserProfileScreen = () => {
     }
   };
 
+  const genderArray = [
+    {
+      key: 'male',
+      title: 'Male',
+    },
+    {key: 'female', title: 'Female'},
+    {key: 'other', title: 'Other'},
+  ];
+  let selectedCellStyle;
+  selectedCellStyle = {...styles.cell2, ...styles.selectedCell2};
+  useEffect(() => {
+    setGender(gender);
+  }, [gender]);
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>User Profile</Text>
 
+        {/* <Controller
+          name="firstName"
+          control={control}
+          rules={{required: true, validate: value => value.length > 0}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>First Name</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="First Name"
+                  onChangeText={onChange}
+                  value={value}
+                />
+                <Text style={styles.errorText}>
+                  {errors.firstName?.message}
+                </Text>
+              </View>
+            );
+          }}
+        /> */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>First Name</Text>
           <TextInput
@@ -188,12 +239,21 @@ const UserProfileScreen = () => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Gender</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Gender"
-            value={gender}
-            onChangeText={text => setGender(text)}
-          />
+          <View style={styles.container2}>
+            {genderArray.map(thisEl => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    setGender(thisEl.key);
+                  }}
+                  style={
+                    gender === thisEl.key ? selectedCellStyle : styles.cell2
+                  }>
+                  <Text>{thisEl.title}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
         </View>
 
         <View style={styles.inputContainer}>
@@ -294,6 +354,19 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     fontSize: 12,
+  },
+  container2: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginHorizontal: 5,
+  },
+  selectedCell2: {backgroundColor: 'pink'},
+  cell2: {
+    flex: 1,
+    borderWidth: 1,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
