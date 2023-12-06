@@ -32,6 +32,9 @@ const AllUsersScreen = () => {
         }>{`Name: ${item.firstName} ${item.lastName}`}</Text>
       <Text style={styles.userDob}>{`DOB: ${item.dob}`}</Text>
       <Text style={styles.userGender}>{`Gender: ${item.gender}`}</Text>
+      <Text style={styles.userGender}>{`Color: ${item.userColor}`}</Text>
+      <Text style={styles.userGender}>{`Location: ${item.userLocation}`}</Text>
+      <Text style={styles.userGender}>{`Author: ${item.author}`}</Text>
     </View>
   );
 

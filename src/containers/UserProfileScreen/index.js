@@ -8,6 +8,7 @@ import {
   Alert,
   Pressable,
   Platform,
+  ScrollView,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import firestore from '@react-native-firebase/firestore';
@@ -85,102 +86,116 @@ const UserProfileScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>User Profile</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>User Profile</Text>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>First Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="First Name"
-          value={firstName}
-          onChangeText={text => setFirstName(text)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Last Name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Last Name"
-          value={lastName}
-          onChangeText={text => setLastName(text)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Date of Birth</Text>
-        {showDatePicker && (
-          <DateTimePicker
-            mode="date"
-            display="spinner"
-            value={date}
-            onChange={onChange}
-            style={styles.datePicker}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>First Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={text => setFirstName(text)}
           />
-        )}
+        </View>
 
-        {showDatePicker && Platform.OS === 'ios' && (
-          <View style={styles.iosButtonContainer}>
-            <TouchableOpacity
-              onPress={toggleDatePicker}
-              style={styles.iosButton}>
-              <Text style={styles.buttonText2}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={confirmIOSDate} style={styles.iosButton}>
-              <Text style={styles.buttonText2}>Confirm</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Last Name</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={text => setLastName(text)}
+          />
+        </View>
 
-        {!showDatePicker && (
-          <Pressable onPress={toggleDatePicker}>
-            <TextInput
-              style={styles.input}
-              placeholder="Date of Birth"
-              value={dob}
-              onChangeText={text => setDob(text)}
-              editable={false}
-              onPressIn={toggleDatePicker}
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Date of Birth</Text>
+          {showDatePicker && (
+            <DateTimePicker
+              mode="date"
+              display="spinner"
+              value={date}
+              onChange={onChange}
+              style={styles.datePicker}
             />
-          </Pressable>
-        )}
-      </View>
+          )}
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>User Location</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="User Location"
-          value={userLocation}
-          onChangeText={text => setUserLocation(text)}
-        />
-      </View>
+          {showDatePicker && Platform.OS === 'ios' && (
+            <View style={styles.iosButtonContainer}>
+              <TouchableOpacity
+                onPress={toggleDatePicker}
+                style={styles.iosButton}>
+                <Text style={styles.buttonText2}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={confirmIOSDate}
+                style={styles.iosButton}>
+                <Text style={styles.buttonText2}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Color</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Color"
-          value={userColor}
-          onChangeText={text => setUserColor(text)}
-        />
-      </View>
+          {!showDatePicker && (
+            <Pressable onPress={toggleDatePicker}>
+              <TextInput
+                style={styles.input}
+                placeholder="Date of Birth"
+                value={dob}
+                onChangeText={text => setDob(text)}
+                editable={false}
+                onPressIn={toggleDatePicker}
+              />
+            </Pressable>
+          )}
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Author</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Author"
-          value={author}
-          onChangeText={text => setAuthor(text)}
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Gender</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Gender"
+            value={gender}
+            onChangeText={text => setGender(text)}
+          />
+        </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleAddUser}>
-        <Text style={styles.buttonText}>Save Profile</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>User Location</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="User Location"
+            value={userLocation}
+            onChangeText={text => setUserLocation(text)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Color</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Color"
+            value={userColor}
+            onChangeText={text => setUserColor(text)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Author</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Author"
+            value={author}
+            onChangeText={text => setAuthor(text)}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleAddUser}>
+          <Text style={styles.buttonText}>Save Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
