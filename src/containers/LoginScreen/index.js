@@ -65,20 +65,31 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Modal visible={visible} onRequestClose={() => setVisible(false)}>
-        <View style={styles.languagesList}>
-          <FlatList
-            data={Object.keys(languageResources)}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={styles.languageButton}
-                onPress={() => changeLng(item)}>
-                <Text style={styles.langName}>
-                  {languageList[item].nativeName}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
+      <Modal
+        visible={visible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setVisible(false)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <FlatList
+              data={Object.keys(languageResources)}
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  style={styles.languageButton}
+                  onPress={() => changeLng(item)}>
+                  <Text style={styles.langName}>
+                    {languageList[item].nativeName}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setVisible(false)}>
+              <Text style={styles.buttonText2}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
       <Text style={styles.title}>{t('welcome')}</Text>
@@ -180,20 +191,38 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
   },
-  languagesList: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 10,
-    backgroundColor: '#6258e8',
-  },
   languageButton: {
     padding: 10,
     borderBottomColor: '#dddddd',
     borderBottomWidth: 1,
   },
+  buttonText2: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   langName: {
     fontSize: 16,
     color: 'white',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#54afd8',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  cancelButton: {
+    marginTop: 20,
+    backgroundColor: '#E23f2c',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
   },
 });
 
