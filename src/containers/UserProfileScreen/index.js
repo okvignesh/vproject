@@ -16,6 +16,9 @@ import auth from '@react-native-firebase/auth';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import ColorPicker from 'reanimated-color-picker';
+import {Preview, Panel1, HueSlider} from 'reanimated-color-picker';
+import ColorComponent from '../../components/ColorComponent';
 
 const UserProfileScreen = () => {
   //   const validationSchema = yup.object().shape({
@@ -35,7 +38,7 @@ const UserProfileScreen = () => {
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('male');
-  const [userColor, setUserColor] = useState('#000000');
+  const [userColor, setUserColor] = useState('#000111');
   const [userLocation, setUserLocation] = useState('');
   const [author, setAuthor] = useState('');
 
@@ -149,6 +152,11 @@ const UserProfileScreen = () => {
   useEffect(() => {
     setGender(gender);
   }, [gender]);
+
+  const onColorChange = color => {
+    console.log('Am I calling??');
+    setUserColor(color);
+  };
 
   return (
     <ScrollView>
@@ -270,10 +278,11 @@ const UserProfileScreen = () => {
           <Text style={styles.label}>Color</Text>
           <TextInput
             style={styles.input}
-            placeholder="Color"
+            placeholder="User Color"
             value={userColor}
-            onChangeText={text => setUserColor(text)}
+            editable={false}
           />
+          <ColorComponent onColorChange={onColorChange} />
         </View>
 
         <View style={styles.inputContainer}>
