@@ -26,7 +26,7 @@ const ColorComponent = ({onColorChange}) => {
     <View style={styles.container}>
       <Button title="Update Color" onPress={() => setShowModal(true)} />
 
-      <Modal visible={showModal} animationTyp="fade">
+      <Modal visible={showModal} animationType="fade">
         <View style={styles.modalContainer}>
           <ColorPicker
             style={styles.colorPicker}
@@ -39,7 +39,6 @@ const ColorComponent = ({onColorChange}) => {
             <OpacitySlider />
             <Swatches />
           </ColorPicker>
-
           <View style={styles.buttonContainer}>
             <Button title="OK" onPress={() => onPressOK()} />
           </View>
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 200,
   },
 });
 
