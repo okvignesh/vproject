@@ -8,6 +8,7 @@ import {
   WelcomeScreen,
   UserProfileScreen,
   AllUsersScreen,
+  UserPositionScreen,
 } from '../containers';
 import {MyPlaces, AllPlaces, AddPlace} from '../components';
 import auth from '@react-native-firebase/auth';
@@ -60,6 +61,10 @@ const Navigator = () => {
         <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
         <Drawer.Screen name="UserProfileScreen" component={UserProfileScreen} />
         <Drawer.Screen name="AllUsersScreen" component={AllUsersScreen} />
+        <Drawer.Screen
+          name="UserPositionScreen"
+          component={UserPositionScreen}
+        />
         <Drawer.Screen name="MyPlaces" component={MyPlaces} />
         <Drawer.Screen name="AllPlaces" component={AllPlaces} />
         <Drawer.Screen name="AddPlace" component={AddPlace} />
