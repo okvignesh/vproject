@@ -281,7 +281,7 @@ const UserProfileScreen = () => {
             value={userColor}
             editable={false}
           />
-          <ColorComponent onColorChange={onColorChange} />
+          <ColorComponent onColorChange={onColorChange} userColor={userColor} />
         </View>
 
         <View style={styles.inputContainer}>

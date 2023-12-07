@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Modal, StyleSheet, View, Text} from 'react-native';
 import ColorPicker, {
   Panel1,
@@ -8,17 +8,26 @@ import ColorPicker, {
   HueSlider,
 } from 'reanimated-color-picker';
 
-const ColorComponent = ({onColorChange}) => {
+const ColorComponent = ({onColorChange, userColor}) => {
   const [showModal, setShowModal] = useState(false);
-  const [colorCode, setColorCode] = useState(null);
+  const [colorCode, setColorCode] = useState(userColor);
+  const [checkCode, setCheckCode] = useState(false);
+
+  useEffect(() => {
+    setColorCode(userColor);
+  }, []);
 
   const onSelectColor = ({hex}) => {
+    setCheckCode(true);
+    console.log(hex);
     const hexWithoutHash = hex.substring(1);
     setColorCode(hexWithoutHash);
   };
 
   const onPressOK = () => {
-    onColorChange(colorCode);
+    console.log(userColor);
+    console.log(colorCode);
+    checkCode ? onColorChange(colorCode) : onColorChange(userColor);
     setShowModal(false);
   };
 
@@ -26,7 +35,7 @@ const ColorComponent = ({onColorChange}) => {
     <View style={styles.container}>
       <Button title="Update Color" onPress={() => setShowModal(true)} />
 
-      <Modal visible={showModal} animationType="fade">
+      <Modal visible={showModal} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
           <ColorPicker
             style={styles.colorPicker}
@@ -58,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   colorPicker: {
     width: '70%',
