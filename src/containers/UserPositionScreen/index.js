@@ -10,6 +10,7 @@ import {
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {LocationHelper} from '../../helpers';
 
 const UserPositionScreen = () => {
   const currentUser = auth().currentUser;
@@ -60,7 +61,32 @@ const UserPositionScreen = () => {
   };
 
   const fetchCurrentLocation = () => {
-    // Implement logic to fetch the current location from Maps
+    // Fetch the current location from Maps
+    LocationHelper.checkLocationPermission(
+      () => {
+        // LocationHelper.fetchLocation(
+        LocationHelper.trackUserLocation(
+          position => {
+            // console.log(position);
+            // console.log(position.coords);
+            // console.log(position.coords.latitude);
+            // console.log(position.coords.longitude);
+            // console.log(position.coords.speed);
+            setCurrentLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              speed: position.coords.speed,
+            });
+          },
+          error => {
+            console.log(error);
+          },
+        );
+      },
+      error => {
+        console.log(`Error fetching current location ${error}`);
+      },
+    );
     // Update the state with latitude, longitude, and speed
   };
 

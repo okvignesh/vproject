@@ -1725,6 +1725,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/geolocation@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-3.1.0.tgz#573881e9536d55cc2af74762183fa7ba575b2553"
+  integrity sha512-Aj76wMeCLz9kczpe7W2IXxSRNj+hRR7sqyfXq9ZaJIWNH23jeJfzMpovclg+e1uM8Vr8jCYEcZyD4rKub6Vc/Q==
+
 "@react-native-firebase/app@^18.7.1":
   version "18.7.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.7.1.tgz#89fea18713a0fec9e2a0190a4be6b6c54208a73e"
@@ -5859,6 +5864,11 @@ react-native-fbsdk-next@^12.1.2:
   resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-12.1.2.tgz#46ddb91e22b6bda4a9097bdc78209b09878c111a"
   integrity sha512-N5MgPwFLnLnC73HuvPLoG+KOjYJBnCFKpkbB3A8+AcKh5BrCcGFICtm3q8XXH1FUiQ8l+meQixz1ag1QoTEBig==
 
+react-native-geolocation-service@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-5.3.1.tgz#4ce1017789da6fdfcf7576eb6f59435622af4289"
+  integrity sha512-LTXPtPNmrdhx+yeWG47sAaCgQc3nG1z+HLLHlhK/5YfOgfLcAb9HAkhREPjQKPZOUx8pKZMIpdGFUGfJYtimXQ==
+
 react-native-gesture-handler@^2.14.0:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.14.0.tgz#d6aec0d8b2e55c67557fd6107e828c0a1a248be8"
@@ -5892,6 +5902,11 @@ react-native-paper@^5.11.3:
     "@callstack/react-theme-provider" "^3.0.9"
     color "^3.1.2"
     use-latest-callback "^0.1.5"
+
+react-native-permissions@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-4.0.0.tgz#64eb341993b0d317fb753104bc72f911d253d613"
+  integrity sha512-VWdETvRVf5WWLOKxle88UtB+LNQR99LvWOkg8C/azNTYLhuAqeSI+SYll+og/A0TIepeTsxnBrtX/YNB3hNQ0w==
 
 react-native-reanimated@^3.5.1:
   version "3.6.1"
