@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {TextInput} from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {LocationHelper} from '../../helpers';
@@ -18,10 +19,6 @@ const UserPositionScreen = () => {
   const userName = currentUser ? currentUser.displayName : '';
 
   const [currentLocation, setCurrentLocation] = useState({
-    // latitude: 51.4657689,
-    // longitude: -2.5722472,
-    // latitudeDelta: 0.0922,
-    // longitudeDelta: 0.0421,
     latitude: 51.4657689,
     longitude: -2.5722472,
     speed: 10,
@@ -61,7 +58,6 @@ const UserPositionScreen = () => {
   };
 
   const fetchCurrentLocation = () => {
-    // Fetch the current location from Maps
     LocationHelper.checkLocationPermission(
       () => {
         // LocationHelper.fetchLocation(
@@ -69,9 +65,6 @@ const UserPositionScreen = () => {
           position => {
             // console.log(position);
             // console.log(position.coords);
-            // console.log(position.coords.latitude);
-            // console.log(position.coords.longitude);
-            // console.log(position.coords.speed);
             setCurrentLocation({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
@@ -87,7 +80,6 @@ const UserPositionScreen = () => {
         console.log(`Error fetching current location ${error}`);
       },
     );
-    // Update the state with latitude, longitude, and speed
   };
 
   const saveUserPosition = async () => {
@@ -113,10 +105,8 @@ const UserPositionScreen = () => {
       };
 
       if (userPositionSnapshot.empty) {
-        // No existing document, add a new one
         await userPositionRef.add(userPositionData);
       } else {
-        // Update the existing document
         await userPositionRef
           .doc(userPositionSnapshot.docs[0].id)
           .update(userPositionData);
@@ -133,7 +123,6 @@ const UserPositionScreen = () => {
       <View style={styles.container}>
         <Text style={styles.title}>User Position</Text>
 
-        {/* Display the current location on the map */}
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -152,6 +141,69 @@ const UserPositionScreen = () => {
             description={`Speed: ${currentLocation.speed}`}
           />
         </MapView>
+
+        <View style={styles.infoContainer}>
+          <TextInput
+            label="User ID"
+            value={userId}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="User Name"
+            value={userName}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Latitude"
+            value={`${currentLocation.latitude}`}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Longitude"
+            value={`${currentLocation.longitude}`}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Location Time"
+            value={currentLocation.locationTime?.toLocaleString()}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Speed"
+            value={`${currentLocation.speed}`}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Author"
+            value={userProfile.author}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="First Name"
+            value={userProfile.firstName}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="Last Name"
+            value={userProfile.lastName}
+            style={styles.input}
+            editable={false}
+          />
+          <TextInput
+            label="User Color"
+            value={userProfile.userColor}
+            style={styles.input}
+            editable={false}
+          />
+        </View>
 
         <TouchableOpacity style={styles.button} onPress={saveUserPosition}>
           <Text style={styles.buttonText}>Save User Position</Text>
@@ -177,6 +229,13 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
     marginBottom: 16,
+  },
+  infoContainer: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  input: {
+    marginBottom: 8,
   },
   button: {
     backgroundColor: '#27ae60',
