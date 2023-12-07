@@ -17,6 +17,7 @@ const UserPositionScreen = () => {
   const currentUser = auth().currentUser;
   const userId = currentUser ? currentUser.uid : '';
   const userName = currentUser ? currentUser.displayName : '';
+  const locationTime = new Date();
 
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 51.4657689,
@@ -88,8 +89,6 @@ const UserPositionScreen = () => {
       const userPositionSnapshot = await userPositionRef
         .where('userId', '==', userId)
         .get();
-
-      const locationTime = new Date();
 
       const userPositionData = {
         userId,
@@ -169,7 +168,7 @@ const UserPositionScreen = () => {
           />
           <TextInput
             label="Location Time"
-            value={currentLocation.locationTime?.toLocaleString()}
+            value={`${locationTime}`}
             style={styles.input}
             editable={false}
           />

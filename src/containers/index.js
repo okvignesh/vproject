@@ -5,6 +5,7 @@ import WelcomeScreen from './WelcomeScreen';
 import UserProfileScreen from './UserProfileScreen';
 import AllUsersScreen from './AllUsersScreen';
 import UserPositionScreen from './UserPositionScreen';
+import AllUsersPosition from './AllUsersPosition';
 
 export {
   LoginScreen,
@@ -14,4 +15,5 @@ export {
   UserProfileScreen,
   AllUsersScreen,
   UserPositionScreen,
+  AllUsersPosition,
 };
