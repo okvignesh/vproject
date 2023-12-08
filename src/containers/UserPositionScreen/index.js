@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {TextInput} from 'react-native-paper';
+import {TextInput, Colors} from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {LocationHelper} from '../../helpers';
@@ -26,7 +26,7 @@ const UserPositionScreen = () => {
   });
 
   const [userProfile, setUserProfile] = useState({
-    author: '',
+    author: 'Vignesh',
     firstName: '',
     lastName: '',
     userColor: '#000000',
@@ -136,7 +136,7 @@ const UserPositionScreen = () => {
               latitude: currentLocation.latitude,
               longitude: currentLocation.longitude,
             }}
-            title="Current Location"
+            title={`Current Location of ${userName}`}
             description={`Speed: ${currentLocation.speed}`}
           />
         </MapView>
@@ -199,7 +199,10 @@ const UserPositionScreen = () => {
           <TextInput
             label="User Color"
             value={userProfile.userColor}
-            style={styles.input}
+            style={{
+              ...styles.input,
+              backgroundColor: `#${userProfile.userColor}`,
+            }}
             editable={false}
           />
         </View>
