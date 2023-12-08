@@ -8,14 +8,18 @@ const AllPlaces = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await firestore()
+        const unsubscribe = firestore()
           .collection('UserMyPlaces')
-          .get();
-        const data = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPlaces(data);
+          .onSnapshot(querySnapshot => {
+            const data = querySnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setPlaces(data);
+          });
+
+        // Clean up the listener when the component unmounts
+        return () => unsubscribe();
       } catch (error) {
         console.error('Error fetching data:', error);
       }
