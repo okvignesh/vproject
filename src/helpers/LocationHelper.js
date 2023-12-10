@@ -14,9 +14,11 @@ class LocationHelper {
   fetchLocation = (success, failure) => {
     Geolocation.getCurrentPosition(
       locationData => {
+        console.log('success fetching location ', locationData);
         success(locationData);
       },
       error => {
+        console.log('Error fetching location ', error);
         failure(error);
       },
       {
@@ -28,13 +30,15 @@ class LocationHelper {
   trackUserLocation = (success, failure) => {
     this.watchId = Geolocation.watchPosition(
       locationData => {
+        console.log('success tracking location ', locationData);
         success(locationData);
       },
       error => {
+        console.log('Error tracking location ', error);
         failure(error);
       },
       {
-        interval: 1000,
+        interval: 500,
         // fastestInterval?: number;
         // timeout: 5000,
         // maximumAge: 2000,

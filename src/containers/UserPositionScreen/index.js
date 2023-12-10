@@ -25,6 +25,8 @@ const UserPositionScreen = () => {
     speed: 10,
   });
 
+  console.log('currentLocation out ', currentLocation);
+
   const [userProfile, setUserProfile] = useState({
     author: 'Vignesh',
     firstName: '',
@@ -34,7 +36,22 @@ const UserPositionScreen = () => {
 
   useEffect(() => {
     fetchUserProfile();
+    console.log('currentLocation before ', currentLocation);
     fetchCurrentLocation();
+    console.log('currentLocation after ', currentLocation);
+  }, []);
+
+  useEffect(() => {
+    // Define your function here
+
+    // Call the function initially
+    fetchCurrentLocation();
+
+    // Set up the interval to call the function every 5 seconds
+    const intervalId = setInterval(fetchCurrentLocation, 5000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
   }, []);
 
   const fetchUserProfile = async () => {
@@ -59,12 +76,13 @@ const UserPositionScreen = () => {
   };
 
   const fetchCurrentLocation = () => {
+    console.log('Calling fetchCurrentLocation every 5 secs');
     LocationHelper.checkLocationPermission(
       () => {
         // LocationHelper.fetchLocation(
         LocationHelper.trackUserLocation(
           position => {
-            // console.log(position);
+            console.log('tracking position', position);
             // console.log(position.coords);
             setCurrentLocation({
               latitude: position.coords.latitude,
@@ -85,6 +103,7 @@ const UserPositionScreen = () => {
 
   const saveUserPosition = async () => {
     try {
+      //   fetchCurrentLocation();
       const userPositionRef = firestore().collection('UsersPosition');
       const userPositionSnapshot = await userPositionRef
         .where('userId', '==', userId)
@@ -209,6 +228,9 @@ const UserPositionScreen = () => {
 
         <TouchableOpacity style={styles.button} onPress={saveUserPosition}>
           <Text style={styles.buttonText}>Save User Position</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={fetchCurrentLocation}>
+          <Text style={styles.buttonText}>Fetch User Position</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
