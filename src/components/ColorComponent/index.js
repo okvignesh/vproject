@@ -21,12 +21,22 @@ const ColorComponent = ({onColorChange, userColor}) => {
     setCheckCode(true);
     console.log(hex);
     const hexWithoutHash = hex.substring(1);
+    // Remove "#" if present
+    // const hexWithoutHash = hex.startsWith('#') ? hex.substring(1) : hex;
+
+    // // Ensure the final hex code is 6 digits
+    // const colorCode =
+    //   hexWithoutHash.length === 8
+    //     ? hexWithoutHash.substring(0, 6)
+    //     : hexWithoutHash;
+
+    // setColorCode(colorCode);
     setColorCode(hexWithoutHash);
   };
 
   const onPressOK = () => {
-    console.log(userColor);
-    console.log(colorCode);
+    // console.log(userColor);
+    // console.log(colorCode);
     checkCode ? onColorChange(colorCode) : onColorChange(userColor);
     setShowModal(false);
   };

@@ -25,7 +25,7 @@ const UserPositionScreen = () => {
     speed: 10,
   });
 
-  console.log('currentLocation out ', currentLocation);
+  //   console.log('currentLocation out ', currentLocation);
 
   const [userProfile, setUserProfile] = useState({
     author: 'Vignesh',
@@ -36,9 +36,9 @@ const UserPositionScreen = () => {
 
   useEffect(() => {
     fetchUserProfile();
-    console.log('currentLocation before ', currentLocation);
+    // console.log('currentLocation before ', currentLocation);
     fetchCurrentLocation();
-    console.log('currentLocation after ', currentLocation);
+    // console.log('currentLocation after ', currentLocation);
   }, []);
 
   useEffect(() => {
@@ -76,13 +76,13 @@ const UserPositionScreen = () => {
   };
 
   const fetchCurrentLocation = () => {
-    console.log('Calling fetchCurrentLocation every 5 secs');
+    // console.log('Calling fetchCurrentLocation every 5 secs');
     LocationHelper.checkLocationPermission(
       () => {
         // LocationHelper.fetchLocation(
         LocationHelper.trackUserLocation(
           position => {
-            console.log('tracking position', position);
+            // console.log('tracking position', position);
             // console.log(position.coords);
             setCurrentLocation({
               latitude: position.coords.latitude,

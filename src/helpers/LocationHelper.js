@@ -14,7 +14,7 @@ class LocationHelper {
   fetchLocation = (success, failure) => {
     Geolocation.getCurrentPosition(
       locationData => {
-        console.log('success fetching location ', locationData);
+        // console.log('success fetching location ', locationData);
         success(locationData);
       },
       error => {
@@ -30,7 +30,7 @@ class LocationHelper {
   trackUserLocation = (success, failure) => {
     this.watchId = Geolocation.watchPosition(
       locationData => {
-        console.log('success tracking location ', locationData);
+        // console.log('success tracking location ', locationData);
         success(locationData);
       },
       error => {
