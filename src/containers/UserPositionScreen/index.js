@@ -18,6 +18,7 @@ const UserPositionScreen = () => {
   const userId = currentUser ? currentUser.uid : '';
   const userName = currentUser ? currentUser.displayName : '';
   const locationTime = new Date();
+  const [isTracking, setIsTracking] = useState(false);
 
   const [currentLocation, setCurrentLocation] = useState({
     latitude: 51.4657689,
@@ -25,34 +26,38 @@ const UserPositionScreen = () => {
     speed: 10,
   });
 
-  //   console.log('currentLocation out ', currentLocation);
-
   const [userProfile, setUserProfile] = useState({
     author: 'Vignesh',
-    firstName: '',
-    lastName: '',
+    firstName: 'Vignesh1',
+    lastName: 'Kumaran1',
     userColor: '#000000',
   });
 
   useEffect(() => {
     fetchUserProfile();
-    // console.log('currentLocation before ', currentLocation);
     fetchCurrentLocation();
-    // console.log('currentLocation after ', currentLocation);
+    const id = setInterval(fetchCurrentLocation, 5000);
+    return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    // Define your function here
+  const startTracking = () => {
+    setIsTracking(true);
+  };
 
-    // Call the function initially
-    fetchCurrentLocation();
+  const stopTracking = () => {
+    setIsTracking(false);
+  };
 
-    // Set up the interval to call the function every 5 seconds
-    const intervalId = setInterval(fetchCurrentLocation, 5000);
+  //   useEffect(() => {
+  //     // Call the function initially
+  //     fetchCurrentLocation();
 
-    // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, []);
+  //     // Set up the interval to call the function every 5 seconds
+  //     const intervalId = setInterval(fetchCurrentLocation, 5000);
+
+  //     // Clear the interval when the component is unmounted
+  //     return () => clearInterval(intervalId);
+  //   }, []);
 
   const fetchUserProfile = async () => {
     try {
@@ -64,9 +69,9 @@ const UserPositionScreen = () => {
       if (!userSnapshot.empty) {
         const userData = userSnapshot.docs[0].data();
         setUserProfile({
-          author: userData.author || '',
-          firstName: userData.firstName || '',
-          lastName: userData.lastName || '',
+          author: userData.author || 'Vignesh',
+          firstName: userData.firstName || 'Vignesh1',
+          lastName: userData.lastName || 'Kumaran1',
           userColor: userData.userColor || '#000000',
         });
       }
@@ -89,6 +94,11 @@ const UserPositionScreen = () => {
               longitude: position.coords.longitude,
               speed: position.coords.speed,
             });
+            // console.log('isTracking -> ', isTracking);
+            if (isTracking) {
+              // Save the user position when tracking is enabled
+              saveUserPosition();
+            }
           },
           error => {
             console.log(error);
@@ -130,7 +140,7 @@ const UserPositionScreen = () => {
           .update(userPositionData);
       }
 
-      Alert.alert('User Position Saved Successfully!');
+      //   Alert.alert('User Position Saved Successfully!');
     } catch (error) {
       console.error('Error adding/updating user position:', error);
     }
@@ -159,6 +169,14 @@ const UserPositionScreen = () => {
             description={`Speed: ${currentLocation.speed}`}
           />
         </MapView>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={isTracking ? stopTracking : startTracking}>
+          <Text style={styles.buttonText}>
+            {isTracking ? 'Stop Tracking' : 'Start Tracking'}
+          </Text>
+        </TouchableOpacity>
 
         <View style={styles.infoContainer}>
           <TextInput
@@ -229,9 +247,9 @@ const UserPositionScreen = () => {
         <TouchableOpacity style={styles.button} onPress={saveUserPosition}>
           <Text style={styles.buttonText}>Save User Position</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={fetchCurrentLocation}>
+        {/* <TouchableOpacity style={styles.button} onPress={fetchCurrentLocation}>
           <Text style={styles.buttonText}>Fetch User Position</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );

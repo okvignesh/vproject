@@ -46,7 +46,8 @@ const SignupScreen = ({navigation}) => {
       });
 
       Alert.alert('Signup Successful, Login Now');
-      navigation.navigate('LoginScreen');
+      // Not required as it'll login immediately after signup since we're listening using onAuthStateChanged
+      // navigation.navigate('LoginScreen');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         setError('email', {
