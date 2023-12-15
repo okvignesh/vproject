@@ -15,5 +15,6 @@
   "myPlaces": "MyPlaces",
   "allPlaces": "AllPlaces",
   "addPlace": "AddPlace",
-  "dashboardScreen": "Dashboard Screen"
+  "dashboardScreen": "Dashboard Screen",
+  "pubnubScreen": "PubnubScreen"
 }

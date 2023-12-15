@@ -6,6 +6,7 @@ import UserProfileScreen from './UserProfileScreen';
 import AllUsersScreen from './AllUsersScreen';
 import UserPositionScreen from './UserPositionScreen';
 import AllUsersPosition from './AllUsersPosition';
+import PubNubScreen from './PubnubScreen';
 
 export {
   LoginScreen,
@@ -16,4 +17,5 @@ export {
   AllUsersScreen,
   UserPositionScreen,
   AllUsersPosition,
+  PubNubScreen,
 };

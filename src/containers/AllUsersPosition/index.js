@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, FlatList} from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import firestore from '@react-native-firebase/firestore';
+import {useNavigation} from '@react-navigation/native';
 
 const AllUsersPosition = () => {
   const [userPositions, setUserPositions] = useState([]);
   const [mapView, setMapView] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -21,24 +23,6 @@ const AllUsersPosition = () => {
 
     return () => unsubscribe();
   }, []);
-
-  //   const handleZoomIn = () => {
-  //     mapView.animateToRegion({
-  //       latitude: userPositions[0]?.currentLatitude || 0,
-  //       longitude: userPositions[0]?.currentLongitude || 0,
-  //       latitudeDelta: 0.02,
-  //       longitudeDelta: 0.02,
-  //     });
-  //   };
-
-  //   const handleZoomOut = () => {
-  //     mapView.animateToRegion({
-  //       latitude: userPositions[0]?.currentLatitude || 0,
-  //       longitude: userPositions[0]?.currentLongitude || 0,
-  //       latitudeDelta: 0.2,
-  //       longitudeDelta: 0.2,
-  //     });
-  //   };
 
   const handleTrackUser = userName => {
     const selectedUserPosition = userPositions.find(
@@ -57,6 +41,10 @@ const AllUsersPosition = () => {
     }
   };
 
+  const handleChat = userName => {
+    navigation.navigate('PubnubScreen', {userName});
+  };
+
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={[
@@ -65,6 +53,9 @@ const AllUsersPosition = () => {
       ]}
       onPress={() => handleTrackUser(item.userName)}>
       <Text style={styles.userName}>{item.userName}</Text>
+      <TouchableOpacity onPress={() => handleChat(item.userName)}>
+        <Text style={styles.chatButton}>Chat</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 
@@ -72,7 +63,6 @@ const AllUsersPosition = () => {
     <View style={styles.container}>
       <Text style={styles.title}>All Users Position</Text>
 
-      {/* Map */}
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -96,17 +86,6 @@ const AllUsersPosition = () => {
         ))}
       </MapView>
 
-      {/* Map Controls */}
-      {/* <View style={styles.buttonContainer}>
-        <Text style={styles.button} onPress={handleZoomIn}>
-          Zoom In
-        </Text>
-        <Text style={styles.button} onPress={handleZoomOut}>
-          Zoom Out
-        </Text>
-      </View> */}
-
-      {/* User List */}
       <FlatList
         data={userPositions}
         renderItem={renderItem}
@@ -158,6 +137,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: 'white',
     fontWeight: 'bold',
+  },
+  chatButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: '#2ecc71',
+    padding: 8,
+    borderRadius: 8,
+    marginLeft: 8,
   },
 });
 

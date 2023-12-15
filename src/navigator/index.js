@@ -10,6 +10,7 @@ import {
   AllUsersScreen,
   UserPositionScreen,
   AllUsersPosition,
+  PubNubScreen,
 } from '../containers';
 import {MyPlaces, AllPlaces, AddPlace, LanguagesModal} from '../components';
 import auth from '@react-native-firebase/auth';
@@ -26,9 +27,9 @@ import {useTranslation} from 'react-i18next';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const Navigator = props => {
-  const [user, setUser] = useState(undefined);
+const Navigator = () => {
   const {t} = useTranslation();
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -79,6 +80,12 @@ const Navigator = props => {
         <Drawer.Screen name={t('myPlaces')} component={MyPlaces} />
         <Drawer.Screen name={t('allPlaces')} component={AllPlaces} />
         <Drawer.Screen name={t('addPlace')} component={AddPlace} />
+        <Drawer.Screen
+          name={t('pubnubScreen')}
+          component={PubNubScreen}
+          options={{drawerLabel: 'Chat'}}
+        />
+
         <Drawer.Screen name={t('change-language')} component={LanguagesModal} />
       </Drawer.Navigator>
     );
