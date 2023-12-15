@@ -2,9 +2,11 @@ import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useRoute} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const ProfileScreen = () => {
   const route = useRoute();
+  const {t, i18n} = useTranslation();
   // const username = route.params;
   // console.log(username);
   // const [username, setUsername] = useState(route.params);
@@ -17,33 +19,13 @@ const ProfileScreen = () => {
     // props.navigation.navigate('LoginScreen');
   };
 
-  // const handleMyPlaces = () => {
-  //   props.navigation.navigate('MyPlaces');
-  // };
-
-  // const handleAllPlaces = () => {
-  //   props.navigation.navigate('AllPlaces');
-  // };
-
-  // const handleAddPlace = () => {
-  //   props.navigation.navigate('AddPlace');
-  // };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Dashboard Screen</Text>
-      <Text style={styles.title}>{`Welcome ${currentUser.displayName} !`}</Text>
-      {/* <TouchableOpacity style={styles.button} onPress={handleMyPlaces}>
-        <Text style={styles.buttonText}>My Places</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleAllPlaces}>
-        <Text style={styles.buttonText}>All Places</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleAddPlace}>
-        <Text style={styles.buttonText}>Add Place</Text>
-      </TouchableOpacity> */}
+      <Text style={styles.title}>{`${t('welcome1')} ${
+        currentUser.displayName
+      } !`}</Text>
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
+        <Text style={styles.buttonText}>{t('logout')}</Text>
       </TouchableOpacity>
     </View>
   );

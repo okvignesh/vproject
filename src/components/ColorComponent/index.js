@@ -20,18 +20,18 @@ const ColorComponent = ({onColorChange, userColor}) => {
   const onSelectColor = ({hex}) => {
     setCheckCode(true);
     console.log(hex);
-    const hexWithoutHash = hex.substring(1);
-    // Remove "#" if present
-    // const hexWithoutHash = hex.startsWith('#') ? hex.substring(1) : hex;
 
-    // // Ensure the final hex code is 6 digits
-    // const colorCode =
-    //   hexWithoutHash.length === 8
-    //     ? hexWithoutHash.substring(0, 6)
-    //     : hexWithoutHash;
+    // const hexWithoutHash = hex.substring(1);
+    // setColorCode(hexWithoutHash);
 
-    // setColorCode(colorCode);
-    setColorCode(hexWithoutHash);
+    const hexWithoutHash = hex.startsWith('#') ? hex.substring(1) : hex;
+
+    const colorCode =
+      hexWithoutHash.length === 8
+        ? hexWithoutHash.substring(0, 6)
+        : hexWithoutHash;
+
+    setColorCode(colorCode);
   };
 
   const onPressOK = () => {

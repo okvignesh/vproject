@@ -11,8 +11,9 @@ import {
   UserPositionScreen,
   AllUsersPosition,
 } from '../containers';
-import {MyPlaces, AllPlaces, AddPlace} from '../components';
+import {MyPlaces, AllPlaces, AddPlace, LanguagesModal} from '../components';
 import auth from '@react-native-firebase/auth';
+
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -20,12 +21,14 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const Navigator = () => {
+const Navigator = props => {
   const [user, setUser] = useState(undefined);
+  const {t} = useTranslation();
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -56,20 +59,27 @@ const Navigator = () => {
         drawerContent={props => (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
-            <DrawerItem label="Logout" onPress={handleLogout} />
+            <DrawerItem label={t('logout')} onPress={handleLogout} />
           </DrawerContentScrollView>
         )}>
-        <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Drawer.Screen name="UserProfileScreen" component={UserProfileScreen} />
-        <Drawer.Screen name="AllUsersScreen" component={AllUsersScreen} />
+        <Drawer.Screen name={t('profileScreen')} component={ProfileScreen} />
         <Drawer.Screen
-          name="UserPositionScreen"
+          name={t('userProfileScreen')}
+          component={UserProfileScreen}
+        />
+        <Drawer.Screen name={t('allUsersScreen')} component={AllUsersScreen} />
+        <Drawer.Screen
+          name={t('userPositionScreen')}
           component={UserPositionScreen}
         />
-        <Drawer.Screen name="AllUsersPosition" component={AllUsersPosition} />
-        <Drawer.Screen name="MyPlaces" component={MyPlaces} />
-        <Drawer.Screen name="AllPlaces" component={AllPlaces} />
-        <Drawer.Screen name="AddPlace" component={AddPlace} />
+        <Drawer.Screen
+          name={t('allUsersPosition')}
+          component={AllUsersPosition}
+        />
+        <Drawer.Screen name={t('myPlaces')} component={MyPlaces} />
+        <Drawer.Screen name={t('allPlaces')} component={AllPlaces} />
+        <Drawer.Screen name={t('addPlace')} component={AddPlace} />
+        <Drawer.Screen name={t('change-language')} component={LanguagesModal} />
       </Drawer.Navigator>
     );
   };

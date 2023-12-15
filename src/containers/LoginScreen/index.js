@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 });
 
 const LoginScreen = ({navigation}) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const {
     control,
     handleSubmit,
@@ -59,7 +59,7 @@ const LoginScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
 
   const changeLng = lng => {
-    i18next.changeLanguage(lng);
+    i18n.changeLanguage(lng);
     setVisible(false);
   };
 

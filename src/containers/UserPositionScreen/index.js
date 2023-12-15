@@ -119,6 +119,10 @@ const UserPositionScreen = () => {
         .where('userId', '==', userId)
         .get();
 
+      console.log('Current Latitude ', currentLocation.latitude);
+      console.log('Current Longitude ', currentLocation.longitude);
+      console.log('Current Speed ', currentLocation.speed);
+
       const userPositionData = {
         userId,
         userName,

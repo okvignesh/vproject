@@ -1,8 +1,19 @@
 {
   "change-language": "Change Language",
   "welcome": "Welcome to my app",
+  "welcome1": "Welcome",
   "login": "Login",
   "noaccount": "Don't have an account? Sign up here",
   "enteremail": "Enter your Email",
-  "enterpwd": "Enter your Password"
+  "enterpwd": "Enter your Password",
+  "logout": "Logout",
+  "profileScreen": "ProfileScreen",
+  "userProfileScreen": "UserProfileScreen",
+  "allUsersScreen": "AllUsersScreen",
+  "userPositionScreen": "UserPositionScreen",
+  "allUsersPosition": "AllUsersPosition",
+  "myPlaces": "MyPlaces",
+  "allPlaces": "AllPlaces",
+  "addPlace": "AddPlace",
+  "dashboardScreen": "Dashboard Screen"
 }
