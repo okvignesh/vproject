@@ -108,6 +108,7 @@ const LoginScreen = ({navigation}) => {
         control={control}
         render={({field}) => (
           <TextInput
+            testID="email_input"
             autoCapitalize="none"
             style={styles.input}
             placeholder="Enter your email"
@@ -126,6 +127,7 @@ const LoginScreen = ({navigation}) => {
         control={control}
         render={({field}) => (
           <TextInput
+            testID="password_input"
             style={styles.input}
             placeholder="Enter your password"
             secureTextEntry
@@ -141,12 +143,13 @@ const LoginScreen = ({navigation}) => {
       )}
 
       <TouchableOpacity
+        testID="login_button"
         style={styles.button}
         onPress={handleSubmit(handleLogin)}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={navigateToSignup}>
+      <TouchableOpacity testID="signup_button" onPress={navigateToSignup}>
         <Text style={styles.signupText}>No Account? Signup now !</Text>
       </TouchableOpacity>
     </View>

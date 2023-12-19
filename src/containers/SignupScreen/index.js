@@ -69,12 +69,15 @@ const SignupScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text testID="signup_title" style={styles.title}>
+        Sign Up
+      </Text>
 
       <Controller
         control={control}
         render={({field}) => (
           <TextInput
+            testID="signup_username_input"
             autoCapitalize="none"
             style={styles.input}
             placeholder="Enter your Name"
@@ -93,6 +96,7 @@ const SignupScreen = ({navigation}) => {
         control={control}
         render={({field}) => (
           <TextInput
+            testID="signup_email_input"
             autoCapitalize="none"
             style={styles.input}
             placeholder="Enter your Email"
@@ -111,6 +115,7 @@ const SignupScreen = ({navigation}) => {
         control={control}
         render={({field}) => (
           <TextInput
+            testID="signup_password_input"
             autoCapitalize="none"
             style={styles.input}
             placeholder="Enter your Password"
@@ -127,12 +132,16 @@ const SignupScreen = ({navigation}) => {
       )}
 
       <TouchableOpacity
+        testID="signup_submit_button"
         style={styles.button}
         onPress={handleSubmit(handleSignup)}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity
+        testID="goto_login"
+        style={styles.button}
+        onPress={handleLogin}>
         <Text style={styles.buttonText}>Go to Login</Text>
       </TouchableOpacity>
     </View>
