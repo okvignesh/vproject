@@ -12,9 +12,9 @@ import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import auth from '@react-native-firebase/auth';
-import i18next, {languageResources} from '../../../services/i18next';
-import languageList from '../../../services/languageList.json';
-import {useTranslation} from 'react-i18next';
+// import i18next, {languageResources} from '../../../services/i18next';
+// import languageList from '../../../services/languageList.json';
+// import {useTranslation} from 'react-i18next';
 
 const schema = yup.object().shape({
   email: yup
@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 });
 
 const LoginScreen = ({navigation}) => {
-  const {t, i18n} = useTranslation();
+  // const {t, i18n} = useTranslation();
   const {
     control,
     handleSubmit,
@@ -56,16 +56,16 @@ const LoginScreen = ({navigation}) => {
     navigation.navigate('SignupScreen');
   };
 
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
 
-  const changeLng = lng => {
-    i18n.changeLanguage(lng);
-    setVisible(false);
-  };
+  // const changeLng = lng => {
+  //   i18n.changeLanguage(lng);
+  //   setVisible(false);
+  // };
 
   return (
     <View style={styles.container}>
-      <Modal
+      {/* <Modal
         visible={visible}
         transparent={true}
         animationType="slide"
@@ -91,16 +91,18 @@ const LoginScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-      <Text style={styles.title}>{t('welcome')}</Text>
-      <TouchableOpacity
+      </Modal> */}
+      <Text testID="welcome" style={styles.title}>
+        welcome
+      </Text>
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           setVisible(true);
         }}>
         <Text style={styles.buttonText}>{t('change-language')}</Text>
-      </TouchableOpacity>
-      <Text style={styles.title}>{t('login')}</Text>
+      </TouchableOpacity> */}
+      <Text style={styles.title}>Login</Text>
 
       <Controller
         control={control}
@@ -108,7 +110,7 @@ const LoginScreen = ({navigation}) => {
           <TextInput
             autoCapitalize="none"
             style={styles.input}
-            placeholder={t('enteremail')}
+            placeholder="Enter your email"
             onChangeText={text => field.onChange(text)}
             value={field.value}
           />
@@ -125,7 +127,7 @@ const LoginScreen = ({navigation}) => {
         render={({field}) => (
           <TextInput
             style={styles.input}
-            placeholder={t('enterpwd')}
+            placeholder="Enter your password"
             secureTextEntry
             onChangeText={text => field.onChange(text)}
             value={field.value}
@@ -141,11 +143,11 @@ const LoginScreen = ({navigation}) => {
       <TouchableOpacity
         style={styles.button}
         onPress={handleSubmit(handleLogin)}>
-        <Text style={styles.buttonText}>{t('login')}</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={navigateToSignup}>
-        <Text style={styles.signupText}>{t('noaccount')}</Text>
+        <Text style={styles.signupText}>No Account? Signup now !</Text>
       </TouchableOpacity>
     </View>
   );
